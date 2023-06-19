@@ -12,32 +12,32 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, NavLink as Linkes } from "react-router-dom";
 const links = [
   {
-    link: "/Dashboard/Empresas",
+    link: "Empresas",
     name: "Empresas",
     icon: faUsers,
   },
   {
-    link: "/Dashboard/Usuarios",
+    link: "Usuarios",
     name: "Usuarios",
     icon: faUser,
   },
   {
-    link: "/Dashboard/Emails",
+    link: "Emails",
     name: "Correos",
     icon: faEnvelope,
   },
   {
-    link: "/Dashboard/Pc",
+    link: "Pc",
     name: "Inv Pc",
     icon: faDesktop,
   },
   {
-    link: "/Dashboard/Laptop",
+    link: "Laptop",
     name: "Inv Laptop",
     icon: faLaptop,
   },
   {
-    link: "/Dashboard/Ajustes",
+    link: "Ajustes",
     name: "Ajustes",
     icon: faGear,
     position: "mt-20",

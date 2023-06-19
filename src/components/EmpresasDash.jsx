@@ -1,8 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { empresasget } from "../api/empresas";
 function EmpresasDash() {
+  const [EmpresaData, setEmpresaData] = useState([]);
   const editname = [{ name: "Editar" }, { name: "Borrar" }];
   const Editlink = ({ name }) => {
     return (
@@ -11,6 +13,13 @@ function EmpresasDash() {
       </li>
     );
   };
+  const realizarbusqueda = async () => {
+    let databusqueda = await empresasget();
+    setEmpresaData(databusqueda);
+  };
+  useEffect(() => {
+    realizarbusqueda();
+  }, []);
   const SectionEmpresa = ({ nombre, fechacreacion }) => {
     const [ActiveOptionmod, setActiveOptionmod] = useState(false);
     return (
@@ -40,20 +49,25 @@ function EmpresasDash() {
               onClick={() => setActiveOptionmod(!ActiveOptionmod)}
             />
           )}
-        
         </div>
         <Link to={`${nombre}`}>
-          <h3 className="text-2xl font-bold mb-8">{nombre}</h3>
-          <h4>Dia de Creacion : {fechacreacion}</h4>
+          <h3 className="text-2xl font-bold mb-8 capitalize">{nombre}</h3>
+          <h4>
+            Dia de Creacion <br></br> {fechacreacion}
+          </h4>
         </Link>
       </section>
     );
   };
   return (
     <main className="flex flex-wrap gap-6">
-      <SectionEmpresa nombre={"Corpalen"} fechacreacion={"20/22/22"} />
-      <SectionEmpresa nombre={"Corpalen"} fechacreacion={"20/22/22"} />
-      <SectionEmpresa nombre={"Corpalen"} fechacreacion={"20/22/22"} />
+      {EmpresaData.map((empresa, index) => (
+        <SectionEmpresa
+          key={empresa.id}
+          nombre={empresa.nombre}
+          fechacreacion={empresa.createdAt}
+        />
+      ))}
     </main>
   );
 }

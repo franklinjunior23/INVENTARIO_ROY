@@ -9,6 +9,7 @@ import Usuariosdash from "./components/Usuariosdash";
 import EmpresaUnica from "./components/EmpresaUnica";
 import AjustesDash from "./components/AjustesDash";
 import InicioDash from "./components/InicioDash";
+import UsuarioSolodash from "./components/UsuarioSolodash";
 
 function App() {
   return (
@@ -20,8 +21,11 @@ function App() {
             <Route path="Dashboard" element={<Dashboard />}>
               <Route path="" element={<InicioDash />} />
               <Route path="Empresas" element={<EmpresasDash />} />
-              <Route path="Empresas/:nombre" element={<EmpresaUnica />} />
+              <Route path="Empresas/:nombre" element={<EmpresaUnica />}>
+                <Route path=":sucursal" element={<h2>ola</h2>} />
+              </Route>
               <Route path="Usuarios" element={<Usuariosdash />} />
+              <Route path="Usuarios/:id" element={<UsuarioSolodash />} />
               <Route path="Ajustes" element={<AjustesDash />} />
             </Route>
           </Route>
