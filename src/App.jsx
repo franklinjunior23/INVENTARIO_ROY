@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Sigup from "./views/Sigup";
 import { Authprovider } from "./useContext/useAuth";
+import { Blackprovider } from "./useContext/Blockblack";
 import Dashboard from "./views/Dashboard";
 import Private from "./routes/Private";
 import Page404 from "./views/Page404";
@@ -14,6 +15,7 @@ import UsuarioSolodash from "./components/UsuarioSolodash";
 function App() {
   return (
     <>
+    <Blackprovider>
       <Authprovider>
         <Routes>
           <Route path="/" element={<Sigup />} />
@@ -32,6 +34,7 @@ function App() {
           <Route path="*" element={<Page404 />} />
         </Routes>
       </Authprovider>
+      </Blackprovider>
     </>
   );
 }

@@ -3,6 +3,7 @@ import {
   faChevronUp,
   faDesktop,
   faEnvelope,
+  faFolder,
   faGear,
   faLaptop,
   faUser,
@@ -37,10 +38,15 @@ const links = [
     icon: faLaptop,
   },
   {
+    link: 'Reportes',
+    name:'Reportes',
+    icon:faFolder
+  },
+  {
     link: "Ajustes",
     name: "Ajustes",
     icon: faGear,
-    position: "mt-20",
+    position: "mt-16",
   },
 ];
 

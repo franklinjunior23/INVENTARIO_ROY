@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getempresaUnica } from "../api/empresas";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
@@ -57,16 +57,17 @@ function EmpresaUnica() {
       </section>
     );
   };
+  const navegador=useNavigate()
   return (
     <section>
-      <div className="w-full flex justify-between">
+      <div className="w-full flex justify-between items-center">
         <div>
           <h4 className="tracking-wide	text-base">
             Sedes de la empresa {parametro}
           </h4>
-          <hr className="border-2	border-black mt-3" />
+          <hr className="border-1	border-black mt-3" />
         </div>
-        <button type="button">Regresar</button>
+        <button type="button" onClick={()=>{navegador(-1)}}>Regresar</button>
       </div>
       <div className="mt-8 flex gap-2 flex-wrap">
         {EmpresaUnica.map((sucursal, index) => (
