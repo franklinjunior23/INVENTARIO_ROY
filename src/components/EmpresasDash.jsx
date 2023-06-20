@@ -2,14 +2,37 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { empresasget } from "../api/empresas";
+import { toast } from "react-toastify";
+import { empresasget, deleteEmpresa } from "../api/empresas";
 function EmpresasDash() {
   const [EmpresaData, setEmpresaData] = useState([]);
-  const editname = [{ name: "Editar" }, { name: "Borrar" }];
-  const Editlink = ({ name }) => {
+
+  const handleEdit = (id) => {
+    console.log(`estas editando ${id}`);
+  };
+  const handleDelete = async (id) => {
+    const resp = await deleteEmpresa(id);
+    if (resp.status == 200) {
+      toast.success('Empresa borrada')
+      const filtrarborrado = EmpresaData.filter((value) => value.id !== id)
+      setEmpresaData(filtrarborrado)
+    }
+  };
+  const editname = [
+    { name: "Editar", funcion: handleEdit },
+    { name: "Borrar", funcion: handleDelete },
+  ];
+
+  const Editlink = ({ name, id, handle }) => {
     return (
       <li className="text-center grid rounded-xl hover:bg-slate-100">
-        <button className="w-full py-2">{name}</button>
+        <button
+          className="w-full py-2"
+          type="button"
+          onClick={() => handle(id)}
+        >
+          {name}
+        </button>
       </li>
     );
   };
@@ -20,15 +43,20 @@ function EmpresasDash() {
   useEffect(() => {
     realizarbusqueda();
   }, []);
-  const SectionEmpresa = ({ nombre, fechacreacion }) => {
+  const SectionEmpresa = ({ nombre, fechacreacion, id }) => {
     const [ActiveOptionmod, setActiveOptionmod] = useState(false);
     return (
       <section className="bg-[#E1C59C] py-3 px-6 w-[270px] relative rounded-2xl">
         {ActiveOptionmod && (
-          <div className="absolute top-10 right-4 w-[140px]  rounded-2xl bg-[#ffff] shadow-xl overflow-hidden">
+          <div className="absolute z-10 top-10 right-4 w-[140px]  rounded-2xl bg-[#ffff] shadow-xl overflow-hidden">
             <ul>
               {editname.map((data, index) => (
-                <Editlink key={index} name={data.name} />
+                <Editlink
+                  key={index}
+                  name={data.name}
+                  id={id}
+                  handle={data.funcion}
+                />
               ))}
             </ul>
           </div>
@@ -64,6 +92,7 @@ function EmpresasDash() {
       {EmpresaData.map((empresa, index) => (
         <SectionEmpresa
           key={empresa.id}
+          id={empresa.id}
           nombre={empresa.nombre}
           fechacreacion={empresa.createdAt}
         />

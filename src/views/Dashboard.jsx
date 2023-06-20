@@ -8,30 +8,28 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { toast } from "react-toastify";
 import { createEmpresa } from "../api/empresas";
-function Dashboard({ children }) {
+function Dashboard() {
   const userNavigate = [{ name: "Configuracion" }, { name: "Cerrar Seccion" }];
   const [Modalcreate, setModalcreate] = useState(false);
-  const handlebut = async(values) => {
-    const data = await createEmpresa(values)
-    console.log(data)
-    if(data.status==200){
-      toast.success("Creando Empresa",{position:"bottom-right",theme:"dark",pauseOnHover:true})
-      modalfunc()
+  const handlebut = async (values) => {
+    const data = await createEmpresa(values);
+    if (data.status == 200) {
+      toast.success("Creando Empresa");
+      window.location.reload();
     }
     // setModalcreate(!Modalcreate);
-
   };
-  const modalfunc = ()=>{
-    setModalcreate(!Modalcreate)
-  }
+  const modalfunc = () => {
+    setModalcreate(!Modalcreate);
+  };
   const Createempresa = () => {
     return (
       <Formik
         initialValues={{
           name: "",
         }}
-        onSubmit={(values, actiibs) => {
-         handlebut(values)
+        onSubmit={(values) => {
+          handlebut(values);
         }}
       >
         {({ values, handleChange, handleSubmit, isSubmitting }) => (
@@ -60,13 +58,12 @@ function Dashboard({ children }) {
                 Añadir
               </button>
               <button
-              type="button"
+                type="button"
                 className="mx-1 py-3 px-6 tracking-wider bg-red-700 rounded-lg text-white font-bold "
                 onClick={modalfunc}
               >
                 Cancelar
               </button>
-              
             </div>
           </Form>
         )}
@@ -109,7 +106,7 @@ function Dashboard({ children }) {
                 <LinksDash />
               </div>
               <div className="bg-white w-[100%] rounded-xl py-6 px-6">
-                <Outlet/>
+                <Outlet />
               </div>
             </section>
           </main>
