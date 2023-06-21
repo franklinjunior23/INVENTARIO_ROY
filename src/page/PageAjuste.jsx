@@ -1,6 +1,6 @@
 import React from 'react'
 
-function AjustesDash() {
+function PageAjuste() {
   return (
     <div>
       Ajustes del Software
@@ -8,4 +8,4 @@ function AjustesDash() {
   )
 }
 
-export default AjustesDash
+export default PageAjuste

@@ -1,8 +1,13 @@
 import axios from "axios"
 
 export const empresasget = async()=>{
-    const result = await axios.get('http://localhost:3000/api/empresas')
-    return result.data
+    try {
+        const result = await axios.get('http://localhost:3000/api/empresas')
+    return result
+    } catch (error) {
+        return error
+    }
+    
 }
 export const getempresaUnica = async()=>{
     const result = await axios.get(`http://localhost:3000/api/sucursales`)

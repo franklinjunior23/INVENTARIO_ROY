@@ -1,39 +1,45 @@
 import { Route, Routes } from "react-router-dom";
 import Sigup from "./views/Sigup";
-import { Authprovider } from "./useContext/useAuth";
-import { Blackprovider } from "./useContext/Blockblack";
+import { Authprovider } from "./middlewares/useAuth";
+import { Blackprovider } from "./middlewares/Blockblack";
 import Dashboard from "./views/Dashboard";
 import Private from "./routes/Private";
 import Page404 from "./views/Page404";
-import EmpresasDash from "./components/EmpresasDash";
-import Usuariosdash from "./components/Usuariosdash";
-import EmpresaUnica from "./components/EmpresaUnica";
-import AjustesDash from "./components/AjustesDash";
-import InicioDash from "./components/InicioDash";
-import UsuarioSolodash from "./components/UsuarioSolodash";
+import PageEmpresas from "./page/PageEmpresas";
+import PageUsuarios from "./page/PageUsuarios";
+import PageSucursals from "./page/PageSucursals";
+import PageAjuste from "./page/PageAjuste";
+import PageInicio from "./page/PageInicio";
+import PageUsuario from "./page/PageUsuario";
+import { Apiprovider } from "./contextApi/DataApi";
 
 function App() {
   return (
     <>
-    <Blackprovider>
-      <Authprovider>
-        <Routes>
-          <Route path="/" element={<Sigup />} />
-          <Route element={<Private />}>
-            <Route path="Dashboard" element={<Dashboard />}>
-              <Route path="" element={<InicioDash />} />
-              <Route path="Empresas" element={<EmpresasDash />} />
-              <Route path="Empresas/:nombre" element={<EmpresaUnica />}>
-                <Route path=":sucursal" element={<h2>ola</h2>} />
-              </Route>
-              <Route path="Usuarios" element={<Usuariosdash />} />
-              <Route path="Usuarios/:id" element={<UsuarioSolodash />} />
-              <Route path="Ajustes" element={<AjustesDash />} />
+      <Blackprovider>
+        <Authprovider>
+          <Routes>
+            <Route path="/" element={<Sigup />} />
+            <Apiprovider>
+            <Route element={<Private />}>
+             
+                <Route path="Dashboard" element={<Dashboard />}>
+                  <Route path="" element={<PageInicio />} />
+                  <Route path="Empresas" element={<PageEmpresas />} />
+                  <Route path="Empresas/:nombre" element={<PageSucursals />}>
+                    <Route path=":sucursal" element={<h2>ola</h2>} />
+                  </Route>
+                  <Route path="Usuarios" element={<PageUsuarios />} />
+                  <Route path="Usuarios/:id" element={<PageUsuario />} />
+                  <Route path="Ajustes" element={<PageAjuste />} />
+                </Route>
+              
             </Route>
-          </Route>
-          <Route path="*" element={<Page404 />} />
-        </Routes>
-      </Authprovider>
+            </Apiprovider>
+
+            <Route path="*" element={<Page404 />} />
+          </Routes>
+        </Authprovider>
       </Blackprovider>
     </>
   );

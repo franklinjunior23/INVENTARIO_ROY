@@ -50,7 +50,7 @@ const links = [
   },
 ];
 
-function LinksDash() {
+function NavigateDash() {
   const Navlink = ({ link, namespace, icons, position = "" }) => {
     return (
       <Linkes
@@ -89,4 +89,4 @@ function LinksDash() {
   );
 }
 
-export default LinksDash;
+export default NavigateDash;

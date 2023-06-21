@@ -1,10 +1,10 @@
 import { Form, Formik } from "formik";
 import { useEffect, useState } from "react";
-import { useAuth } from "../useContext/useAuth";
+import { useAuth } from "../middlewares/useAuth";
 import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-function Formsign() {
+function FormSignUp() {
   const navigator = useNavigate();
   const [UsuarioIniciado, setUsuarioIniciado] = useState(false);
   const { isAuthenticated } = useAuth();
@@ -65,4 +65,4 @@ function Formsign() {
   );
 }
 
-export default Formsign;
+export default FormSignUp;

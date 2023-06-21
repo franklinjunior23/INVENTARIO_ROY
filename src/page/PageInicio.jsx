@@ -1,6 +1,6 @@
 import React from 'react'
 
-function InicioDash() {
+function PageInicio() {
   return (
     <div>
      <h2 className='text-2xl'> Bienvenido Roy Segura al Software </h2>
@@ -8,4 +8,4 @@ function InicioDash() {
   )
 }
 
-export default InicioDash
+export default PageInicio

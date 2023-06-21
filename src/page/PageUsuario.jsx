@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-function UsuarioSolodash() {
+function PageUsuario() {
     const {id}=useParams()
     const volver=useNavigate() 
     console.log(id)
@@ -15,4 +15,4 @@ function UsuarioSolodash() {
   )
 }
 
-export default UsuarioSolodash
+export default PageUsuario

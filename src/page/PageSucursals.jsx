@@ -14,7 +14,7 @@ import {
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 
-function EmpresaUnica() {
+function PageSucursals() {
   const [EmpresaUnica, setEmpresaUnica] = useState([]);
   const parametro = useParams().nombre;
   const resultData = async () => {
@@ -63,14 +63,32 @@ function EmpresaUnica() {
   const ContentSucursal = ({ nombre, fecha, id }) => {
     const [ActiveEdit, setActiveEdit] = useState(false);
     const ElimnarSucursal = async (id, nombre) => {
-      const eliminacion = await deleteSucursal(id);
-      if (eliminacion.status == 200) {
-        const update = EmpresaUnica.filter((item) => item.id !== id);
-        setEmpresaUnica(update);
-        toast.success(`Sucursal ${nombre} eliminado Exitosamente`);
-      } else {
-        toast.error("Algo salio mal intentelo nuevamente");
-      }
+      Swal.fire({
+        title: `Estas seguro de eliminar la sucursal ${nombre} ?`,
+        text: "¡No podrás revertir esto!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Confirmar Borrado",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const eliminacion = await deleteSucursal(id);
+          if (eliminacion.status == 200) {
+            const update = EmpresaUnica.filter((item) => item.id !== id);
+            setEmpresaUnica(update);
+            Swal.fire("Deleted!", "Your file has been deleted.", "success");
+            toast.success(`Sucursal ${nombre} eliminado Exitosamente`);
+          } else {
+            Swal.fire(
+              "Error!",
+              "An error occurred while deleting the file.",
+              "error"
+            );
+            toast.error("Algo salio mal intentelo nuevamente");
+          }
+        }
+      });
     };
     return (
       <section className="w-[300px]  bg-[#E1C59C] p-5 rounded-xl capitalize relative">
@@ -161,4 +179,4 @@ function EmpresaUnica() {
   );
 }
 
-export default EmpresaUnica;
+export default PageSucursals;

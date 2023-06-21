@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-function HeadCabe() {
+function HeadDash() {
   const [ActiveMenu, setActiveMenu] = useState(false);
   return (
     <header className="flex justify-between mb-10">
@@ -47,4 +47,4 @@ function HeadCabe() {
   );
 }
 
-export default HeadCabe;
+export default HeadDash;

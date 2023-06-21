@@ -1,5 +1,5 @@
-import Capaferst from "../components/Capaferst";
-import Formsign from "../components/Formsign";
+import Capaferst from "../components/ContentFerst";
+import Formsign from "../components/FormSignUp";
 
 function Sigup() {
   return (

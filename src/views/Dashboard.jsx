@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Capaferst from "../components/Capaferst";
+import ContentFerst from "../components/ContentFerst";
 import { Form, Formik } from "formik";
-import HeadCabe from "../components/HeadCabe";
-import LinksDash from "../components/LinksDash";
+import HeadDash from "../components/HeadDash";
+import NavigateDash from "../components/NavigateDash";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
@@ -73,9 +73,9 @@ function Dashboard() {
 
   return (
     <>
-      <Capaferst>
+      <ContentFerst>
         <main className="w-[1300px] h-[95vh]  py-2 px-4 ">
-          <HeadCabe />
+          <HeadDash />
           <main className="flex flex-col">
             <section className="w-full mb-6">
               {/** Modal --- crear empresas*/}
@@ -103,7 +103,7 @@ function Dashboard() {
             </section>
             <section className="flex h-full ">
               <div className="bg-white w-[320px] h-full mr-8 rounded-xl  py-6 px-4">
-                <LinksDash />
+                <NavigateDash />
               </div>
               <div className="bg-white w-[100%] rounded-xl py-6 px-6">
                 <Outlet />
@@ -111,7 +111,7 @@ function Dashboard() {
             </section>
           </main>
         </main>
-      </Capaferst>
+      </ContentFerst>
     </>
   );
 }

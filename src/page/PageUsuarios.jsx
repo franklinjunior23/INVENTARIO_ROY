@@ -2,8 +2,8 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { Link, Outlet, Route, useNavigate } from "react-router-dom";
-import EmpresaUnica from "./EmpresaUnica";
-function  Usuariosdash() {
+import EmpresaUnica from "./PageSucursals";
+function  PageUsuarios() {
   const [dataEfect, setdataEfect] = useState([]);
   const [SearchUser, setSearchUser] = useState('');
   const UserJson = [
@@ -63,4 +63,4 @@ function  Usuariosdash() {
   );
 }
 
-export default Usuariosdash;
+export default PageUsuarios;
