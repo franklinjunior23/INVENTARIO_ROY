@@ -17,29 +17,26 @@ function App() {
   return (
     <>
       <Blackprovider>
+      <Apiprovider>
         <Authprovider>
           <Routes>
             <Route path="/" element={<Sigup />} />
-            <Apiprovider>
             <Route element={<Private />}>
-             
-                <Route path="Dashboard" element={<Dashboard />}>
-                  <Route path="" element={<PageInicio />} />
-                  <Route path="Empresas" element={<PageEmpresas />} />
-                  <Route path="Empresas/:nombre" element={<PageSucursals />}>
-                    <Route path=":sucursal" element={<h2>ola</h2>} />
-                  </Route>
-                  <Route path="Usuarios" element={<PageUsuarios />} />
-                  <Route path="Usuarios/:id" element={<PageUsuario />} />
-                  <Route path="Ajustes" element={<PageAjuste />} />
+              <Route path="Dashboard" element={<Dashboard />}>
+                <Route path="" element={<PageInicio />} />
+                <Route path="Empresas" element={<PageEmpresas />} />
+                <Route path="Empresas/:nombre" element={<PageSucursals />}>
+                  <Route path=":sucursal" element={<h2>ola</h2>} />
                 </Route>
-              
+                <Route path="Usuarios" element={<PageUsuarios />} />
+                <Route path="Usuarios/:id" element={<PageUsuario />} />
+                <Route path="Ajustes" element={<PageAjuste />} />
+              </Route>
             </Route>
-            </Apiprovider>
-
             <Route path="*" element={<Page404 />} />
           </Routes>
         </Authprovider>
+        </Apiprovider>
       </Blackprovider>
     </>
   );

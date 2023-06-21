@@ -5,7 +5,9 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { empresasget, deleteEmpresa } from "../api/empresas";
 import Swal from "sweetalert2";
+import { useData } from "../contextApi/DataApi";
 function PageEmpresas() {
+  const {getEmpresas , EmpresasGet} = useData();
   const [EmpresaData, setEmpresaData] = useState([]);
 
   const handleEdit = (id) => {
@@ -37,6 +39,13 @@ function PageEmpresas() {
       </li>
     );
   };
+
+  useEffect(() => {
+      getEmpresas()
+    return () => {
+      getEmpresas()
+    }
+  }, []);
   const realizarbusqueda = async () => {
     try {
       const databusqueda = await empresasget();
@@ -64,10 +73,7 @@ function PageEmpresas() {
       }
     }
   };
-  console.log(EmpresaData)
-  useEffect(() => {
-    realizarbusqueda();
-  }, []);
+
   const SectionEmpresa = ({ nombre, fechacreacion, id }) => {
     const [ActiveOptionmod, setActiveOptionmod] = useState(false);
     return (
@@ -112,7 +118,7 @@ function PageEmpresas() {
       </section>
     );
   };
-  if (EmpresaData === 0) {
+  /**if (EmpresaData === 0) {
     return (
       <div className=" w-full h-full grid place-content-center">
         <h2 className="text-center text-xl">
@@ -125,16 +131,28 @@ function PageEmpresas() {
       </div>
     );
   }
+  */
   return (
     <main className="flex flex-wrap gap-6">
-      {EmpresaData.map((empresa, index) => (
+      { /**EmpresaData.map((empresa, index) => (
         <SectionEmpresa
           key={empresa.id}
           id={empresa.id}
           nombre={empresa.nombre}
           fechacreacion={empresa.createdAt}
         />
-      ))}
+      ))*/
+      EmpresasGet.map((empresa)=>(
+        <SectionEmpresa
+        key={empresa.id}
+        id={empresa.id}
+        nombre={empresa.nombre}
+        fechacreacion={empresa.createdAt}
+      />
+      ))
+    
+    
+    }
     </main>
   );
 }
