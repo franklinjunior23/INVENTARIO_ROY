@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
-import { empresasget } from "../api/empresas";
+import { createEmpresa, deleteEmpresa, empresasget, getempresaUnica } from "../api/empresas";
+import { toast } from "react-toastify";
 
 export const contextoDataApi = createContext();
 
@@ -9,14 +10,41 @@ export const useData = () => {
 };
 export const Apiprovider = ({ children }) => {
   const [EmpresasGet, setEmpresasGet] = useState([]);
+  const [SucursalesGet, setSucursalesGet] = useState([]);
+  const [UsuariosGet, setUsuariosGet] = useState([]);
 
-  const getEmpresas = async () => {
+
+  const getEmpresasApi = async () => {
     const result = await empresasget();
     setEmpresasGet(result.data);
   };
+
+  const createEmpresaApi = async (nombre) => {
+    const result = await createEmpresa(nombre)
+    setEmpresasGet([...EmpresasGet, result.data])
+    toast.success(`Empresa Creada Correctamente ${nombre}`)
+  }
+  const deleteEmpresaApi = async (id) => {
+    const result = await deleteEmpresa(id);
+    const update = EmpresasGet.filter((value) => value.id !== id);
+    setEmpresasGet(update);
+    toast.success(`Empresa borrada correctamente`);
+  }
+
+  const getSucursalesApi = async () => {
+    const result = await getempresaUnica();
+    setSucursalesGet(result.data)
+  }
+
+  const deleteSucursalApi = async (id) => {
+    const result = await deleteSucursal(id)
+    const update = EmpresasGet.filter((value) => value.id !== id);
+    setSucursalesGet(update);
+    toast.success("Sucursal borrada");
+  }
   return (
     <contextoDataApi.Provider
-      value={{ EmpresasGet, setEmpresasGet, getEmpresas }}
+      value={{ EmpresasGet,SucursalesGet, setEmpresasGet, getEmpresasApi, createEmpresaApi, deleteEmpresaApi, getSucursalesApi, deleteSucursalApi }}
     >
       {children}
     </contextoDataApi.Provider>
