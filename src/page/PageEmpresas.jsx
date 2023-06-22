@@ -2,24 +2,28 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import { empresasget, deleteEmpresa } from "../api/empresas";
-import Swal from "sweetalert2";
 import { useData } from "../contextApi/DataApi";
+import Swal from "sweetalert2";
 function PageEmpresas() {
-  const {getEmpresas , EmpresasGet} = useData();
-  const [EmpresaData, setEmpresaData] = useState([]);
-
+  const { getEmpresasApi, EmpresasGet, deleteEmpresaApi } = useData();
   const handleEdit = (id) => {
     console.log(`estas editando ${id}`);
   };
   const handleDelete = async (id) => {
-    const resp = await deleteEmpresa(id);
-    if (resp.status == 200) {
-      toast.success("Empresa borrada");
-      const filtrarborrado = EmpresaData.filter((value) => value.id !== id);
-      setEmpresaData(filtrarborrado);
-    }
+    Swal.fire({
+      title: `Estas seguro de eliminar esta empresa ?`,
+      text: "¡No podrás revertir esto!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Confirmar Borrado",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+       await deleteEmpresaApi(id);
+      }
+    });
+    
   };
   const editname = [
     { name: "Editar", funcion: handleEdit },
@@ -41,38 +45,8 @@ function PageEmpresas() {
   };
 
   useEffect(() => {
-      getEmpresas()
-    return () => {
-      getEmpresas()
-    }
+    getEmpresasApi();
   }, []);
-  const realizarbusqueda = async () => {
-    try {
-      const databusqueda = await empresasget();
-      setEmpresaData(databusqueda.data);
-      
-      /** 
-      if (databusqueda.request.status == 200) {
-        setEmpresaData(databusqueda.data);
-      } else if (databusqueda.request.status == 404) {
-      }
-      */
-    } catch (error) {
-      if (error.request) {
-        Swal.fire({
-          icon: "error",
-          title: "Error de conexión",
-          text: "Verifique su conexión de red y vuelva a intentarlo",
-        });
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Error en el servidor",
-          text: "Comuníquese con el técnico",
-        });
-      }
-    }
-  };
 
   const SectionEmpresa = ({ nombre, fechacreacion, id }) => {
     const [ActiveOptionmod, setActiveOptionmod] = useState(false);
@@ -118,41 +92,17 @@ function PageEmpresas() {
       </section>
     );
   };
-  /**if (EmpresaData === 0) {
-    return (
-      <div className=" w-full h-full grid place-content-center">
-        <h2 className="text-center text-xl">
-          No se encontraron datos de la empresa.
-        </h2>
-        <p className="text-lg">
-          Comuníquese con el técnico para resolver el problema.
-        </p>
-        <img width={400} src="https://img.freepik.com/vector-gratis/ups-error-404-ilustracion-concepto-robot-roto_114360-5529.jpg?w=826&t=st=1687381597~exp=1687382197~hmac=cc8d958745c227285ec83c2c53e30e8fad70d732e553d63fb72a8b95408e6fb5" alt="" />
-      </div>
-    );
-  }
-  */
+
   return (
     <main className="flex flex-wrap gap-6">
-      { /**EmpresaData.map((empresa, index) => (
+      {EmpresasGet.map((empresa) => (
         <SectionEmpresa
           key={empresa.id}
           id={empresa.id}
           nombre={empresa.nombre}
           fechacreacion={empresa.createdAt}
         />
-      ))*/
-      EmpresasGet.map((empresa)=>(
-        <SectionEmpresa
-        key={empresa.id}
-        id={empresa.id}
-        nombre={empresa.nombre}
-        fechacreacion={empresa.createdAt}
-      />
-      ))
-    
-    
-    }
+      ))}
     </main>
   );
 }

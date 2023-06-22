@@ -6,18 +6,15 @@ import NavigateDash from "../components/NavigateDash";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import { toast } from "react-toastify";
-import { createEmpresa } from "../api/empresas";
+import { useData } from "../contextApi/DataApi";
+
 function Dashboard() {
+  const {createEmpresaApi} = useData()
   const userNavigate = [{ name: "Configuracion" }, { name: "Cerrar Seccion" }];
   const [Modalcreate, setModalcreate] = useState(false);
   const handlebut = async (values) => {
-    const data = await createEmpresa(values);
-    if (data.status == 200) {
-      toast.success("Creando Empresa");
-      window.location.reload();
-    }
-    // setModalcreate(!Modalcreate);
+     await createEmpresaApi(values);
+     modalfunc()
   };
   const modalfunc = () => {
     setModalcreate(!Modalcreate);

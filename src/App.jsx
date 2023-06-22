@@ -26,7 +26,8 @@ function App() {
                 <Route path="" element={<PageInicio />} />
                 <Route path="Empresas" element={<PageEmpresas />} />
                 <Route path="Empresas/:nombre" element={<PageSucursals />}>
-                  <Route path=":sucursal" element={<h2>ola</h2>} />
+                  <Route path=":sucursal" element={<h2>ddddddddddd</h2>} >
+                  </Route>
                 </Route>
                 <Route path="Usuarios" element={<PageUsuarios />} />
                 <Route path="Usuarios/:id" element={<PageUsuario />} />

@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import {
-  createSucursal,
-  deleteSucursal,
-  getempresaUnica,
-} from "../api/empresas";
+import { Link, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronDown,
@@ -12,28 +7,24 @@ import {
   faReply,
 } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
-import { toast } from "react-toastify";
+import { useData } from "../contextApi/DataApi";
+
+
 
 function PageSucursals() {
-  const [EmpresaUnica, setEmpresaUnica] = useState([]);
   const parametro = useParams().nombre;
-  const resultData = async () => {
-    const result = await getempresaUnica();
-    const filtrar = result.filter((empresa) =>
-      empresa.empresa.nombre
-        .toLocaleLowerCase()
-        .includes(parametro.toLocaleLowerCase())
-    );
-    setEmpresaUnica(filtrar);
-  };
+  const { SucursalesGet , getSucursalesApi ,createSucursalesApi ,deleteSucursalApi } = useData();
+
   useEffect(() => {
-    resultData();
+    getSucursalesApi(parametro)
   }, []);
+  const location = useLocation()
+  console.log(location)
   const AgregarSucursal = async () => {
     const { value: text } = await Swal.fire({
-      title: "Escriba el Nombre de la Sucursal",
+      title: "Agregando Nueva Sucursal",
       input: "text",
-      inputPlaceholder: "Enter your message",
+      inputPlaceholder: "Nombre Sucursal",
       inputAttributes: {
         autocapitalize: "off",
         autocorrect: "off",
@@ -50,14 +41,7 @@ function PageSucursals() {
     });
     if (text != null) {
       const data = { nombre: text, empresa: parametro };
-
-      const respuesta = await createSucursal(data);
-      setEmpresaUnica([...EmpresaUnica, respuesta.data]);
-      if (respuesta.status == 200) {
-        toast.success(`Se creo la sucursal ${respuesta.data.nombre}`);
-      } else {
-        toast.error("Algo salio mal intentelo nuevamente");
-      }
+      createSucursalesApi(data)
     }
   };
   const ContentSucursal = ({ nombre, fecha, id }) => {
@@ -73,20 +57,7 @@ function PageSucursals() {
         confirmButtonText: "Confirmar Borrado",
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const eliminacion = await deleteSucursal(id);
-          if (eliminacion.status == 200) {
-            const update = EmpresaUnica.filter((item) => item.id !== id);
-            setEmpresaUnica(update);
-            Swal.fire("Deleted!", "Your file has been deleted.", "success");
-            toast.success(`Sucursal ${nombre} eliminado Exitosamente`);
-          } else {
-            Swal.fire(
-              "Error!",
-              "An error occurred while deleting the file.",
-              "error"
-            );
-            toast.error("Algo salio mal intentelo nuevamente");
-          }
+          await deleteSucursalApi(id)
         }
       });
     };
@@ -165,15 +136,19 @@ function PageSucursals() {
           </button>
         </div>
       </div>
-      <div className="mt-8 flex gap-2 flex-wrap">
-        {EmpresaUnica.map((sucursal, index) => (
+      <div className="mt-8 grid grid-cols-2 gap-2 flex-wrap h-[450px] bg-black">
+ 
+        <section className="overflow-scroll flex flex-col gap-4">
+        {SucursalesGet.map((sucursal, index) => (
           <ContentSucursal
             key={sucursal.id}
             id={sucursal.id}
             nombre={sucursal.nombre}
             fecha={sucursal.createdAt}
           />
-        ))}
+        ))}</section>
+        <section> <Outlet/></section>
+       
       </div>
     </section>
   );

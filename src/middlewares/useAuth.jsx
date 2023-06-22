@@ -21,7 +21,7 @@ export const Authprovider = ({ children }) => {
   return (
     <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
       {children}
-      <ToastContainer position="bottom-right" theme="dark" pauseOnHover={false} />
+      <ToastContainer position="bottom-right"  pauseOnHover={false} />
     </AuthContext.Provider>
   );
 };
