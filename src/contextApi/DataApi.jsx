@@ -25,10 +25,15 @@ export const Apiprovider = ({ children }) => {
     toast.success(`Empresa Creada Correctamente ${nombre}`)
   }
   const deleteEmpresaApi = async (id) => {
-    const result = await deleteEmpresa(id);
-    const update = EmpresasGet.filter((value) => value.id !== id);
-    setEmpresasGet(update);
-    toast.success(`Empresa borrada correctamente`);
+    try {
+      const result = await deleteEmpresa(id);
+      const update = EmpresasGet.filter((value) => value.id !== id);
+      setEmpresasGet(update);
+      toast.success(`Empresa borrada correctamente`);
+    } catch (error) {
+      toast.error("Algo salio mal , Intentelo Nuevamente")
+    }
+   
   }
 
   const getSucursalesApi = async () => {
@@ -37,14 +42,19 @@ export const Apiprovider = ({ children }) => {
   }
 
   const deleteSucursalApi = async (id) => {
-    const result = await deleteSucursal(id)
-    const update = EmpresasGet.filter((value) => value.id !== id);
-    setSucursalesGet(update);
-    toast.success("Sucursal borrada");
+    try {
+      const result = await deleteSucursal(id)
+      const update = EmpresasGet.filter((value) => value.id !== id);
+      setSucursalesGet(update);
+      toast.success("Sucursal borrada");
+    } catch (error) {
+      toast.error("Algo Salio mal, Intentelo Nuevamente")
+    }
+
   }
   return (
     <contextoDataApi.Provider
-      value={{ EmpresasGet,SucursalesGet, setEmpresasGet, getEmpresasApi, createEmpresaApi, deleteEmpresaApi, getSucursalesApi, deleteSucursalApi }}
+      value={{ EmpresasGet, SucursalesGet, setEmpresasGet, getEmpresasApi, createEmpresaApi, deleteEmpresaApi, getSucursalesApi, deleteSucursalApi }}
     >
       {children}
     </contextoDataApi.Provider>
