@@ -5,7 +5,7 @@ import HeadDash from "../components/HeadDash";
 import NavigateDash from "../components/NavigateDash";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import { useData } from "../contextApi/DataApi";
 
 function Dashboard() {
@@ -67,11 +67,12 @@ function Dashboard() {
       </Formik>
     );
   };
+const IDsucursal = useParams().nombre
 
   return (
     <>
       <ContentFerst>
-        <main className="w-[1300px] h-[95vh]  py-2 px-4 ">
+        <main className="w-[1450px] h-[90vh]  py-2 px-4 ">
           <HeadDash />
           <main className="flex flex-col">
             <section className="w-full mb-6">
@@ -90,13 +91,14 @@ function Dashboard() {
                   </section>
                 </div>
               )}
-              <button
+              {  IDsucursal == undefined ? (<button
                 onClick={modalfunc}
                 type="button"
                 className="py-2 px-8 bg-black ml-auto block text-white font-semibold text-lg rounded-2xl cursor-pointer hover:bg-gray-900"
               >
                 + Empresa
-              </button>
+              </button>) :("")  }
+              
             </section>
             <section className="flex h-full ">
               <div className="bg-white w-[320px] h-full mr-8 rounded-xl  py-6 px-4">

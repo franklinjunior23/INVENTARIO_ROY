@@ -19,7 +19,7 @@ export const useData = () => {
 export const Apiprovider = ({ children }) => {
   const [EmpresasGet, setEmpresasGet] = useState([]);
   const [SucursalesGet, setSucursalesGet] = useState([]);
-  const [SucursalEmpresa, setSucursalEmpresa] = useState([]);
+  const [DipositivosGet, setDipositivosGet] = useState([]);
   const [UsuariosGet, setUsuariosGet] = useState([]);
 
   const getEmpresasApi = async () => {
@@ -48,7 +48,6 @@ export const Apiprovider = ({ children }) => {
 
   const getSucursalesApi = async (NombreEmpresa) => {
     const result = await getempresaUnica();
-    setSucursalEmpresa(result.data)
     const filtrar = result.data.filter((empresa) =>
       empresa.empresa.nombre == NombreEmpresa
     );
@@ -58,7 +57,7 @@ export const Apiprovider = ({ children }) => {
   const createSucursalesApi = async(data)=>{
     const result = await createSucursal(data)
     setSucursalesGet([...SucursalesGet, result.data])
-    toast.success(`Empresa borrada correctamente`);
+    toast.success(`Sucursal creada correctamente`);
   }
 
   const deleteSucursalApi = async (id) => {

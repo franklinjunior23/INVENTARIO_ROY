@@ -4,8 +4,11 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useData } from "../contextApi/DataApi";
 import Swal from "sweetalert2";
+import Skeleton from "react-loading-skeleton";
+
 function PageEmpresas() {
   const { getEmpresasApi, EmpresasGet, deleteEmpresaApi } = useData();
+  const [LoadingEmpresa, setLoadingEmpresa] = useState(true);
   const handleEdit = (id) => {
     console.log(`estas editando ${id}`);
   };
@@ -20,10 +23,9 @@ function PageEmpresas() {
       confirmButtonText: "Confirmar Borrado",
     }).then(async (result) => {
       if (result.isConfirmed) {
-       await deleteEmpresaApi(id);
+        await deleteEmpresaApi(id);
       }
     });
-    
   };
   const editname = [
     { name: "Editar", funcion: handleEdit },
@@ -45,7 +47,10 @@ function PageEmpresas() {
   };
 
   useEffect(() => {
-    getEmpresasApi();
+    setTimeout(() => {
+      setLoadingEmpresa(!LoadingEmpresa);
+      getEmpresasApi();
+    }, 2000);
   }, []);
 
   const SectionEmpresa = ({ nombre, fechacreacion, id }) => {
@@ -92,17 +97,32 @@ function PageEmpresas() {
       </section>
     );
   };
+  const ContentLoader = () => {
+    return (
+      <>
+        <Skeleton className=" h-36 rounded-lg" width={270} count={1}/>
+        <Skeleton className=" h-36 rounded-lg" width={270} count={1}/>
+        <Skeleton className=" h-36 rounded-lg" width={270} count={1}/>
+        <Skeleton className=" h-36 rounded-lg" width={270} count={1}/>
+        <Skeleton className=" h-36 rounded-lg" width={270} count={1}/>
+        <Skeleton className=" h-36 rounded-lg" width={270} count={1}/>
+      </>
+    );
+  };
+  const FetchEmpresas = () => {
+    return EmpresasGet.map((empresa) => (
+      <SectionEmpresa
+        key={empresa.id}
+        id={empresa.id}
+        nombre={empresa.nombre}
+        fechacreacion={empresa.createdAt}
+      />
+    ));
+  };
 
   return (
     <main className="flex flex-wrap gap-6">
-      {EmpresasGet.map((empresa) => (
-        <SectionEmpresa
-          key={empresa.id}
-          id={empresa.id}
-          nombre={empresa.nombre}
-          fechacreacion={empresa.createdAt}
-        />
-      ))}
+      {LoadingEmpresa ? <ContentLoader /> : <FetchEmpresas />}
     </main>
   );
 }
