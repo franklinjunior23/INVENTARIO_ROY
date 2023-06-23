@@ -14,7 +14,7 @@ import PageUsuario from "./page/PageUsuario";
 import { Apiprovider } from "./contextApi/DataApi";
 import "react-loading-skeleton/dist/skeleton.css";
 import PageCategory from "./page/PageCategory";
-import PageSelecCateg from "./page/PageSelecCateg";
+import PageInventario from "./CategoryPages/PageInventario";
 
 function App() {
   return (
@@ -27,10 +27,11 @@ function App() {
               <Route element={<Private />}>
                 <Route path="Dashboard" element={<Dashboard />}>
                   <Route path="" element={<PageInicio />} />
-                  <Route path="Empresas" element={<PageEmpresas />}>
-                    <Route path=":nombre" element={<PageSucursals />} />
-                    <Route path=":sucursal" element={<PageCategory />} />
-                    <Route path=":category" element={<PageSelecCateg />} />
+                  <Route path="Empresas" element={<PageEmpresas />} />
+                  <Route path="Empresas/:nombre" element={<PageSucursals />}>
+                    <Route path=":sucursal" element={<PageCategory />}>
+                      <Route path=":category" element={<PageInventario />} />
+                    </Route>
                   </Route>
                   <Route path="Usuarios" element={<PageUsuarios />} />
                   <Route path="Usuarios/:id" element={<PageUsuario />} />

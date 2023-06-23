@@ -5,6 +5,7 @@ import {
   deleteEmpresa,
   deleteSucursal,
   empresasget,
+  getUsuarios,
   getempresaUnica,
 } from "../api/empresas";
 import { toast } from "react-toastify";
@@ -73,11 +74,21 @@ export const Apiprovider = ({ children }) => {
       toast.error("Algo Salio mal, Intentelo Nuevamente");
     }
   };
+
+  const UsuariosApiGet = async()=>{
+    try {
+      const result = await getUsuarios()
+      setUsuariosGet(result.data)
+    } catch (error) {
+      toast.error('Algo Salio mal , si sigue asi comunicate con tu provedor')
+    }
+  }
   return (
     <contextoDataApi.Provider
       value={{
         EmpresasGet,
         SucursalesGet,
+        UsuariosGet,
         setEmpresasGet,
         getEmpresasApi,
         createEmpresaApi,
@@ -85,6 +96,9 @@ export const Apiprovider = ({ children }) => {
         getSucursalesApi,
         deleteSucursalApi,
         createSucursalesApi,
+        UsuariosApiGet,
+        
+
       }}
     >
       {children}
