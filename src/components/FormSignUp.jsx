@@ -3,14 +3,23 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../middlewares/useAuth";
 import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { LoginAuth } from "../api/empresas";
 
 function FormSignUp() {
   const navigator = useNavigate();
   const [UsuarioIniciado, setUsuarioIniciado] = useState(false);
   const { isAuthenticated } = useAuth();
+  const [DataLogin, setDataLogin] = useState([]);
   const verificar = () => {
     return navigator("/Dashboard");
   };
+  const Result = async(campologin)=>{
+    const data = await LoginAuth(campologin)
+    setDataLogin(data.data)
+    console.log(data)
+    console.log(DataLogin)
+    verificar()
+  }
   useEffect(() => {
     if (UsuarioIniciado) {
       verificar();
@@ -23,9 +32,8 @@ function FormSignUp() {
         contraseña: "",
       }}
       onSubmit={(values, actions) => {
-        setTimeout(() => {
-          setUsuarioIniciado(true);
-        }, 3000);
+      
+        Result(values)
       }}
     >
       {({ values, handleChange, handleSubmit, isSubmitting }) => (

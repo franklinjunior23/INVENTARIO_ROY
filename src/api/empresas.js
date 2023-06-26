@@ -39,3 +39,8 @@ export const getUsuarios = async () => {
   return result;
     
 };
+
+export const LoginAuth = async(data)=>{
+  const result = await axios.post(`http://localhost:3000/api/login`,data)
+  return result
+}

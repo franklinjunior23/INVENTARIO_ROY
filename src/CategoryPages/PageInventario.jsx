@@ -1,11 +1,12 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { InventarioCategory } from "../DataCampo/DataCamp";
 import { useEffect } from "react";
 import { useData } from "../contextApi/DataApi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { Form, Formik } from "formik";
+
+import FormCreateUser from "../components/FormCreateUser";
+import { InventarioCategory } from "../DataCampo/DataCamp";
 
 function PageInventario() {
   const CategoryEmpresa = useParams().category;
@@ -45,38 +46,8 @@ function PageInventario() {
     return (
       <>
         <div className="fixed w-full h-full top-0 left-0 bg-slate-700/20 grid place-content-center">
-          <div className="shadow-lg bg-white p-3 rounded-lg">
-            <Formik
-              initialValues={{
-                sucursal: SucursalNombre,
-                nombre: "",
-                apellido: "",
-                tipo_usuario: "",
-                nivel_red: "",
-                usuario: "",
-                contraseña: "",
-                anydesk_id: "",
-                anydesk_contraseña: "",
-                email_tipo: "",
-                email_dirrecion: "",
-                email_contraseña: "",
-              }}
-              onSubmit={(values) => {}}
-            >
-              {({ values, handleChange, isSubmitting, handleSubmit }) => (
-                <Form>
-                  <div>
-                    <label htmlFor="2">Tipo de Usuariop</label>
-                    <select>
-                      <option value="" key="2">
-                        aaa
-                      </option>
-                     
-                    </select>
-                  </div>
-                </Form>
-              )}
-            </Formik>
+          <div className="shadow-lg bg-white py-10 px-16 rounded-lg">
+            <FormCreateUser nombresucursal={SucursalNombre}/>
           </div>
         </div>
         <div className="flex justify-between items-center">

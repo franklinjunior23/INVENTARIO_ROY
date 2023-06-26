@@ -1,3 +1,7 @@
+export const tipo_documento=[
+  {name:'DNI' ,default:true},{name:'Pasaporte'},{name:'CE'}
+]
+
 export const CategorySucursal = [
   { name: "Inventario", link:'Inventario' },
   { name: "Informes",link:'Informes' },
